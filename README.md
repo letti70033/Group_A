@@ -5,5 +5,5 @@ Group A Project Advanced Programming for Data Science
 
 - Leticia: 70033@nova.pt
 - Marie: xxxxx@nova.pt
-- Philipp: xxxxx@nova.pt
+- Philipp: 66323@nova.pt
 - Alex: xxxxx@nova.pt
