@@ -7,7 +7,7 @@ DATASETS = [
     "https://ourworldindata.org/grapher/annual-change-forest-area.csv",#[Anual Change in forest area]
     "https://ourworldindata.org/grapher/annual-deforestation.csv",#[Annual deforestation]
     "https://ourworldindata.org/grapher/terrestrial-protected-areas.csv",#[Share of land that is protected]
-    #"https://ourworldindata.org/grapher/share-degraded-land",#[Share of land that is degraded]
+    "https://ourworldindata.org/grapher/share-degraded-land.csv",#[Share of land that is degraded]
     "https://ourworldindata.org/grapher/forest-area-as-share-of-land-area.csv", #[A fifth dataset you find relevant]
     "https://naciscdn.org/naturalearth/110m/cultural/ne_110m_admin_0_countries.zip", #Map dataset
 ]
@@ -26,7 +26,7 @@ class OkavangoData:
         self.forest_change = pd.read_csv(f"{self.download_dir}/annual-change-forest-area.csv")
         self.deforestation = pd.read_csv(f"{self.download_dir}/annual-deforestation.csv")
         self.land_protected = pd.read_csv(f"{self.download_dir}/terrestrial-protected-areas.csv")
-        #self.land_degraded = pd.read_csv(f"{self.download_dir}/share-degraded-land.csv")
+        self.land_degraded = pd.read_csv(f"{self.download_dir}/share-degraded-land.csv")
         self.forest_cover = pd.read_csv(f"{self.download_dir}/forest-area-as-share-of-land-area.csv")
 
         self.geo_df = self.merge_with_map() #function 2 called
