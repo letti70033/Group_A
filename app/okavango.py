@@ -49,14 +49,14 @@ class OkavangoData:
     def merge_with_map(self) -> gpd.GeoDataFrame:
         try:
             world = gpd.read_file(f"{self.download_dir}/ne_110m_admin_0_countries.zip")
-            # Merge with all datasets
-            merged = world.merge(self.forest_change, left_on="NAME", right_on="Entity", how="left", suffixes=('', '_forest'))
-            merged = merged.merge(self.deforestation, left_on="NAME", right_on="Entity", how="left", suffixes=('', '_deforest'))
-            merged = merged.merge(self.land_protected, left_on="NAME", right_on="Entity", how="left", suffixes=('', '_protected'))
-            merged = merged.merge(self.land_degraded, left_on="NAME", right_on="Entity", how="left", suffixes=('', '_degraded'))
-            merged = merged.merge(self.forest_cover, left_on="NAME", right_on="Entity", how="left", suffixes=('', '_cover'))
-        
-            return merged
+            
+            # Create separate merged geodataframes for each dataset
+            self.geo_forest_change = world.merge(self.forest_change, left_on="NAME", right_on="Entity", how="left")
+            self.geo_deforestation = world.merge(self.deforestation, left_on="NAME", right_on="Entity", how="left")
+            self.geo_land_protected = world.merge(self.land_protected, left_on="NAME", right_on="Entity", how="left")
+            self.geo_land_degraded = world.merge(self.land_degraded, left_on="NAME", right_on="Entity", how="left")
+            self.geo_forest_cover = world.merge(self.forest_cover, left_on="NAME", right_on="Entity", how="left")
+            
         except Exception as e:
             print(f"Failed to merge datasets: {e}")
             raise
