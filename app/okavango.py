@@ -29,7 +29,7 @@ class OkavangoData:
         self.land_degraded = pd.read_csv(f"{self.download_dir}/share-degraded-land.csv")
         self.forest_cover = pd.read_csv(f"{self.download_dir}/forest-area-as-share-of-land-area.csv")
 
-        self.geo_df = self.merge_with_map() #function 2 called
+        self.merge_with_map() #function 2 called
 
     #function 1: Downloads a single dataset into the downloads directory.
     def download_dataset(self, url: str) -> None:
@@ -46,7 +46,7 @@ class OkavangoData:
             print(f"Failed to download {filename}: {e}")
     
     #fucntion2: then merge the world map with our datasets
-    def merge_with_map(self) -> gpd.GeoDataFrame:
+    def merge_with_map(self) -> None:
         try:
             world = gpd.read_file(f"{self.download_dir}/ne_110m_admin_0_countries.zip")
             
@@ -64,3 +64,4 @@ class OkavangoData:
 if __name__ == "__main__":
     data = OkavangoData()
     print("Done!")
+
