@@ -54,3 +54,7 @@ class OkavangoData:
         except Exception as e:
             print(f"Failed to merge datasets: {e}")
             raise
+
+if __name__ == "__main__":
+    data = OkavangoData()
+    print("Done!")
