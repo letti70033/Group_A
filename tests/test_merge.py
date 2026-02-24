@@ -45,3 +45,4 @@ def test_merge_with_map_creates_geodataframes(monkeypatch):
 
     assert isinstance(data.geo_forest_change, gpd.GeoDataFrame)
     assert "geometry" in data.geo_forest_change.columns
+    assert "Code" in data.geo_forest_change.columns
