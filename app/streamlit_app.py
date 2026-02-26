@@ -34,11 +34,12 @@ datasets = {
 
 st.title("Project Okavango — Forests, Deforestation, and Land Coverage")
 
+# selectbox creates a dropdown with the dataset names -> based on selection, it pulls out the geodata for a map, the raw data for the time series, and the column name to visualize
 selected = st.selectbox("Select a dataset", options=list(datasets.keys()))
 
 geo_df, raw_df, column = datasets[selected]
 
-# most recent year only
+# finds the most recent year available in the data, filter the GeoDataFrame to only that one and .copy() to avoid pandas warnings and prevent accidental edits to original
 latest_year = int(geo_df["Year"].max())
 df_latest = geo_df[geo_df["Year"] == latest_year].copy()
 
@@ -57,9 +58,11 @@ df_valid = (
     .sort_values(column)
 )
 
+# decision on how many countries to show
 n_each = min(5, len(df_valid) // 2)
 top3_codes: list[str] = []
 
+# build the combined table and plot
 if n_each >= 1:
     bottom_n = df_valid.head(n_each)
     top_n = df_valid.tail(n_each)
@@ -78,7 +81,8 @@ if n_each >= 1:
 else:
     st.info("Not enough country data to display the bar chart.")
 
-# Time series: country multiselect with a line chart over all years, defaulting to the same top 3 countries shown in the bar chart (linked via ISO code)
+# Time series
+# country multiselect with a line chart over all years, defaulting to the same top 3 countries shown in the bar chart (linked via ISO code)
 st.subheader(f"{selected} over time")
 
 # Only rows with an ISO code (excludes continental/world aggregates)
@@ -94,12 +98,14 @@ default_countries = (
     .tolist()
 )
 
+# Country Multiselect Widget
 selected_countries = st.multiselect(
     "Select countries",
     options=country_list,
     default=default_countries,
 )
 
+# Plot lines per Country
 if selected_countries:
     fig3, ax3 = plt.subplots(figsize=(12, 5))
     for country in selected_countries:
