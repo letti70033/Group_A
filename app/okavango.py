@@ -2,6 +2,7 @@ import requests
 import geopandas as gpd
 import pandas as pd
 from pathlib import Path
+from pydantic import validate_call
 
 DATASETS = [
     "https://ourworldindata.org/grapher/annual-change-forest-area.csv",  # Annual Change in forest area
@@ -35,9 +36,14 @@ class OkavangoData:
         self.merge_with_map()
 
     # Function 1: download a single dataset into downloads/
+    @validate_call
     def download_dataset(self, url: str) -> None:
         filename = url.split("/")[-1]
         filepath = self.download_dir / filename
+
+        if filepath.exists():
+            print(f"Already exists, skipping: {filename}")
+            return
 
         try:
             print(f"Downloading {filename}...")

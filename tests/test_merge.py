@@ -1,5 +1,6 @@
 import geopandas as gpd
 import pandas as pd
+from pathlib import Path
 from shapely.geometry import Point
 
 from app.okavango import OkavangoData
@@ -26,7 +27,7 @@ def test_merge_with_map_creates_geodataframes(monkeypatch):
 
     # Create instance without running __init__
     data = OkavangoData.__new__(OkavangoData)
-    data.download_dir = "downloads"
+    data.download_dir = Path("downloads")
 
     # Minimal fake datasets
     df = pd.DataFrame({
