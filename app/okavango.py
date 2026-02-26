@@ -37,7 +37,16 @@ class OkavangoData:
 
     # Function 1: download a single dataset into downloads/
     @validate_call #validates that url is a proper string at runtime
+    
     def download_dataset(self, url: str) -> None:
+        """Downloads a single dataset from the given URL and stores it in the downloads/ directory.
+            If the file already exists, the download is skipped.
+            
+            Parameters
+            ----------
+            url : str
+            The URL of the dataset to download."""
+        
         filename = url.split("/")[-1]
         filepath = self.download_dir / filename
 
@@ -58,6 +67,22 @@ class OkavangoData:
 
     # Function 2: merge the world map with our datasets
     def merge_with_map(self) -> None:
+        """
+    Merges all downloaded datasets with the Natural Earth world map
+    using ISO3 country codes.
+
+    The method:
+    - Loads the world shapefile (Natural Earth dataset)
+    - Cleans missing ISO3 codes
+    - Performs left joins between the map and each dataset
+    - Creates GeoDataFrame attributes for visualization
+
+    Raises
+    ------
+    Exception
+        If merging fails for any reason.
+    """
+    
         try:
             world = gpd.read_file(self.download_dir / "ne_110m_admin_0_countries.zip")
 
