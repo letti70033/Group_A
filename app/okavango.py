@@ -36,11 +36,12 @@ class OkavangoData:
         self.merge_with_map()
 
     # Function 1: download a single dataset into downloads/
-    @validate_call
+    @validate_call #validates that url is a proper string at runtime
     def download_dataset(self, url: str) -> None:
         filename = url.split("/")[-1]
         filepath = self.download_dir / filename
 
+        #before downloading, checks if the file is already in downloads/. If yes, skips it. So the app doesn't re-download everything from scratch on every restart.
         if filepath.exists():
             print(f"Already exists, skipping: {filename}")
             return

@@ -4,7 +4,7 @@ import pandas as pd
 from okavango import OkavangoData
 
 
-@st.cache_resource
+@st.cache_resource #wrapped OkavangoData() in @st.cache_resource. Without this, every time you clicked anything in the app it would re-download all datasets. Now it loads once and stays in memory.
 def load_data() -> OkavangoData:
     return OkavangoData()
 
@@ -50,7 +50,7 @@ df_latest.plot(column=column, ax=ax, legend=True, cmap="YlGn", missing_kwds={"co
 ax.set_axis_off()
 st.pyplot(fig)
 
-# Bar chart: top 5 and bottom 5 countries
+# Bar chart: top 5 and bottom 5 countries for the selected dataset, with a separator line between the two groups
 df_valid = (
     df_latest[["ADM0_A3", "NAME", column]]
     .dropna(subset=[column])
@@ -78,7 +78,7 @@ if n_each >= 1:
 else:
     st.info("Not enough country data to display the bar chart.")
 
-# Time series
+# Time series: country multiselect with a line chart over all years, defaulting to the same top 3 countries shown in the bar chart (linked via ISO code)
 st.subheader(f"{selected} over time")
 
 # Only rows with an ISO code (excludes continental/world aggregates)

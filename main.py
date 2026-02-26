@@ -1,6 +1,6 @@
 from app.okavango import OkavangoData
 
-
+#instantiates OkavangoData and prints a basic summary of each dataset (row count + latest year)
 def main() -> None:
     """Download all datasets, merge with the world map, and print a basic summary."""
     data = OkavangoData()
