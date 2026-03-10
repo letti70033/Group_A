@@ -2,124 +2,131 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import pandas as pd
 from okavango import OkavangoData
+from page2 import show_page2
 
-
-@st.cache_resource #wrapped OkavangoData() in @st.cache_resource. Without this, every time you clicked anything in the app it would re-download all datasets. Now it loads once and stays in memory.
+@st.cache_resource
 def load_data() -> OkavangoData:
     return OkavangoData()
 
+# Navigation
+page = st.sidebar.selectbox("Navigate", ["Page 1 - Analysis", "Page 2 - AI Risk Assessment"])
 
-data = load_data()
+if page == "Page 1 - Analysis":
 
-# geo dataframes (for the map) and raw dataframes (for the time series)
-datasets = {
-    "Annual Change in Forest Area": (
-        data.geo_forest_change, data.forest_change, "Annual change in forest area"
-    ),
-    "Annual Deforestation": (
-        data.geo_deforestation, data.deforestation, "Deforestation"
-    ),
-    "Forest Area as Share of Land": (
-        data.geo_forest_cover, data.forest_cover, "Share of land covered by forest"
-    ),
-    "Share of Degraded Land": (
-        data.geo_land_degraded, data.land_degraded,
-        "Proportion of land that is degraded over total land area (%)"
-    ),
-    "Terrestrial Protected Areas": (
-        data.geo_land_protected, data.land_protected,
-        "Terrestrial protected areas (% of total land area)"
-    ),
-}
+    data = load_data()
 
-st.title("Project Okavango — Forests, Deforestation, and Land Coverage")
+    # geo dataframes (for the map) and raw dataframes (for the time series)
+    datasets = {
+        "Annual Change in Forest Area": (
+            data.geo_forest_change, data.forest_change, "Annual change in forest area"
+        ),
+        "Annual Deforestation": (
+            data.geo_deforestation, data.deforestation, "Deforestation"
+        ),
+        "Forest Area as Share of Land": (
+            data.geo_forest_cover, data.forest_cover, "Share of land covered by forest"
+        ),
+        "Share of Degraded Land": (
+            data.geo_land_degraded, data.land_degraded,
+            "Proportion of land that is degraded over total land area (%)"
+        ),
+        "Terrestrial Protected Areas": (
+            data.geo_land_protected, data.land_protected,
+            "Terrestrial protected areas (% of total land area)"
+        ),
+    }
 
-# selectbox creates a dropdown with the dataset names -> based on selection, it pulls out the geodata for a map, the raw data for the time series, and the column name to visualize
-selected = st.selectbox("Select a dataset", options=list(datasets.keys()))
+    st.title("Project Okavango — Forests, Deforestation, and Land Coverage")
 
-geo_df, raw_df, column = datasets[selected]
+    # selectbox creates a dropdown with the dataset names -> based on selection, it pulls out the geodata for a map, the raw data for the time series, and the column name to visualize
+    selected = st.selectbox("Select a dataset", options=list(datasets.keys()))
 
-# finds the most recent year available in the data, filter the GeoDataFrame to only that one and .copy() to avoid pandas warnings and prevent accidental edits to original
-latest_year = int(geo_df["Year"].max())
-df_latest = geo_df[geo_df["Year"] == latest_year].copy()
+    geo_df, raw_df, column = datasets[selected]
 
-st.subheader(f"{selected} — {latest_year}")
+    # finds the most recent year available in the data, filter the GeoDataFrame to only that one and .copy() to avoid pandas warnings and prevent accidental edits to original
+    latest_year = int(geo_df["Year"].max())
+    df_latest = geo_df[geo_df["Year"] == latest_year].copy()
 
-# World map
-fig, ax = plt.subplots(1, 1, figsize=(15, 8))
-df_latest.plot(column=column, ax=ax, legend=True, cmap="YlGn", missing_kwds={"color": "lightgrey"})
-ax.set_axis_off()
-st.pyplot(fig)
+    st.subheader(f"{selected} — {latest_year}")
 
-# Bar chart: top 5 and bottom 5 countries for the selected dataset, with a separator line between the two groups
-df_valid = (
-    df_latest[["ADM0_A3", "NAME", column]]
-    .dropna(subset=[column])
-    .sort_values(column)
-)
+    # World map
+    fig, ax = plt.subplots(1, 1, figsize=(15, 8))
+    df_latest.plot(column=column, ax=ax, legend=True, cmap="YlGn", missing_kwds={"color": "lightgrey"})
+    ax.set_axis_off()
+    st.pyplot(fig)
 
-# decision on how many countries to show
-n_each = min(5, len(df_valid) // 2)
-top3_codes: list[str] = []
+    # Bar chart: top 5 and bottom 5 countries for the selected dataset, with a separator line between the two groups
+    df_valid = (
+        df_latest[["ADM0_A3", "NAME", column]]
+        .dropna(subset=[column])
+        .sort_values(column)
+    )
 
-# build the combined table and plot
-if n_each >= 1:
-    bottom_n = df_valid.head(n_each)
-    top_n = df_valid.tail(n_each)
-    top3_codes = top_n.tail(3)["ADM0_A3"].tolist()
-    combined = pd.concat([bottom_n, top_n])
-    colors = ["#de2d26"] * n_each + ["#2ca25f"] * n_each
+    # decision on how many countries to show
+    n_each = min(5, len(df_valid) // 2)
+    top3_codes: list[str] = []
 
-    st.subheader(f"Top {n_each} and Bottom {n_each} Countries — {latest_year}")
-    fig2, ax2 = plt.subplots(figsize=(10, max(4, n_each * 0.8)))
-    ax2.barh(combined["NAME"], combined[column], color=colors)
-    ax2.set_xlabel(column)
-    ax2.axvline(0, color="black", linewidth=0.8, linestyle="--")
-    ax2.axhline(n_each - 0.5, color="black", linewidth=1.2, linestyle="--", alpha=0.5)
-    plt.tight_layout()
-    st.pyplot(fig2)
-else:
-    st.info("Not enough country data to display the bar chart.")
+    # build the combined table and plot
+    if n_each >= 1:
+        bottom_n = df_valid.head(n_each)
+        top_n = df_valid.tail(n_each)
+        top3_codes = top_n.tail(3)["ADM0_A3"].tolist()
+        combined = pd.concat([bottom_n, top_n])
+        colors = ["#de2d26"] * n_each + ["#2ca25f"] * n_each
 
-# Time series
-# country multiselect with a line chart over all years, defaulting to the same top 3 countries shown in the bar chart (linked via ISO code)
-st.subheader(f"{selected} over time")
+        st.subheader(f"Top {n_each} and Bottom {n_each} Countries — {latest_year}")
+        fig2, ax2 = plt.subplots(figsize=(10, max(4, n_each * 0.8)))
+        ax2.barh(combined["NAME"], combined[column], color=colors)
+        ax2.set_xlabel(column)
+        ax2.axvline(0, color="black", linewidth=0.8, linestyle="--")
+        ax2.axhline(n_each - 0.5, color="black", linewidth=1.2, linestyle="--", alpha=0.5)
+        plt.tight_layout()
+        st.pyplot(fig2)
+    else:
+        st.info("Not enough country data to display the bar chart.")
 
-# Only rows with an ISO code (excludes continental/world aggregates)
-countries_df = raw_df.dropna(subset=["Code"]).copy()
-country_list = sorted(countries_df["Entity"].unique().tolist())
+    # Time series
+    # country multiselect with a line chart over all years, defaulting to the same top 3 countries shown in the bar chart (linked via ISO code)
+    st.subheader(f"{selected} over time")
 
-# Default: the top 3 countries shown in the bar chart above (matched by ISO code)
-default_countries = (
-    countries_df[
-        countries_df["Code"].isin(top3_codes) &
-        (countries_df["Year"] == latest_year)
-    ]["Entity"]
-    .tolist()
-)
+    # Only rows with an ISO code (excludes continental/world aggregates)
+    countries_df = raw_df.dropna(subset=["Code"]).copy()
+    country_list = sorted(countries_df["Entity"].unique().tolist())
 
-# Country Multiselect Widget
-selected_countries = st.multiselect(
-    "Select countries",
-    options=country_list,
-    default=default_countries,
-)
+    # Default: the top 3 countries shown in the bar chart above (matched by ISO code)
+    default_countries = (
+        countries_df[
+            countries_df["Code"].isin(top3_codes) &
+            (countries_df["Year"] == latest_year)
+        ]["Entity"]
+        .tolist()
+    )
 
-# Plot lines per Country
-if selected_countries:
-    fig3, ax3 = plt.subplots(figsize=(12, 5))
-    for country in selected_countries:
-        series = (
-            countries_df[countries_df["Entity"] == country]
-            .sort_values("Year")
-        )
-        ax3.plot(series["Year"], series[column], marker="o", markersize=3, label=country)
-    ax3.set_xlabel("Year")
-    ax3.set_ylabel(column)
-    ax3.legend()
-    plt.tight_layout()
-    st.pyplot(fig3)
-else:
-    st.info("Select at least one country to display the time series.")
+    # Country Multiselect Widget
+    selected_countries = st.multiselect(
+        "Select countries",
+        options=country_list,
+        default=default_countries,
+    )
+
+    # Plot lines per Country
+    if selected_countries:
+        fig3, ax3 = plt.subplots(figsize=(12, 5))
+        for country in selected_countries:
+            series = (
+                countries_df[countries_df["Entity"] == country]
+                .sort_values("Year")
+            )
+            ax3.plot(series["Year"], series[column], marker="o", markersize=3, label=country)
+        ax3.set_xlabel("Year")
+        ax3.set_ylabel(column)
+        ax3.legend()
+        plt.tight_layout()
+        st.pyplot(fig3)
+    else:
+        st.info("Select at least one country to display the time series.")
+
+elif page == "Page 2 - AI Risk Assessment":
+    show_page2()
 
 # Run with: streamlit run app/streamlit_app.py
