@@ -1,0 +1,35 @@
+# models.yaml — AI workflow configuration for Project Okavango
+# This file is read by the app at startup.
+# Change model names or prompts here without touching any Python code.
+
+image_model:
+  name: "llava"
+  prompt: >
+    Describe what you see in this satellite image in detail.
+    Focus on land cover, vegetation, urban areas, water bodies,
+    and any visible environmental features.
+  timeout: 120
+
+text_model:
+  name: "mistral"
+  prompt: >
+    Based on this satellite image description, answer the following
+    questions with YES or NO and a brief explanation:
+    1. Is there visible deforestation or loss of vegetation?
+    2. Are there signs of urban sprawl or land degradation?
+    3. Is there evidence of water pollution or drought?
+    4. Does this area appear to be at environmental risk overall?
+
+    Description: {description}
+
+    End your response with a single line that says either DANGER or SAFE.
+  timeout: 120
+
+image_settings:
+  tile_service: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile"
+  default_zoom: 12
+  image_dir: "images"
+
+database:
+  dir: "database"
+  file: "images.csv"
