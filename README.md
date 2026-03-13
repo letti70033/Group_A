@@ -134,7 +134,9 @@ Group_A/
 
 ## AI Risk Assessment examples
 
-*Add screenshots here after running the app — at least 3 examples of areas flagged as at environmental risk.*
+![alt text](image.png)
+![alt text](image-2.png)
+![alt text](image-3.png)
 
 ---
 
