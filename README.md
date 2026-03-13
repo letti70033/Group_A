@@ -73,9 +73,12 @@ The app will automatically pull the required models (`llava` and `mistral`) on f
 ```bash
 pip install streamlit geopandas pandas requests shapely plotly pydantic pyyaml folium streamlit-folium ollama
 ```
+
 ---
 
 ## How to run
+
+From the project root (`Group_A/`):
 
 **Streamlit app:**
 
