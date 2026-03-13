@@ -134,9 +134,14 @@ Group_A/
 
 ## AI Risk Assessment examples
 
-![alt text](image.png)
-![alt text](image-2.png)
-![alt text](image-3.png)
+**Leticia, Colombia (Amazon rainforest)** — lat -4.2, lon -69.9, zoom 10
+![Danger flag - Amazon Colombia](screenshots/danger_1.png)
+
+**Sahel region, Mali** — lat 15.1994, lon -7.2949, zoom 10
+![Danger flag - Sahel Mali](screenshots/danger_2.png)
+
+**Amazon, Brazil** — lat -3.5, lon -62, zoom 10
+![Danger flag - Amazon Brazil](screenshots/danger_3.png)
 
 ---
 
