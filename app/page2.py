@@ -290,7 +290,7 @@ def show_page2() -> None:
     # Folium click map — satellite tiles from ESRI
     m = folium.Map(location=[20, 0], zoom_start=2, tiles=None)
     folium.TileLayer(
-        tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+        tiles=f"{tile_service}/{{z}}/{{y}}/{{x}}",
         attr="Esri World Imagery",
         name="Satellite",
     ).add_to(m)
@@ -327,7 +327,7 @@ def show_page2() -> None:
     if cached is not None:
         st.info("✅ Loaded from cache — this location was already analysed.")
         _display_results(
-            image_path=Path(str(cached["image_path"])),
+            image_path=_ROOT / str(cached["image_path"]),
             image_description=str(cached["image_description"]),
             risk_text=str(cached["text_description"]),
         )
@@ -390,7 +390,7 @@ def show_page2() -> None:
         "latitude":          latitude,
         "longitude":         longitude,
         "zoom":              zoom,
-        "image_path":        str(image_path),
+        "image_path":        str(image_path.relative_to(_ROOT)),
         "image_prompt":      image_prompt,
         "image_model":       img_cfg["name"],
         "image_description": image_description,
