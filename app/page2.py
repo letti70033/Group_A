@@ -14,11 +14,13 @@ import math
 from datetime import datetime
 from pathlib import Path
 
+import folium
 import ollama
 import pandas as pd
 import requests
 import streamlit as st
 import yaml
+from streamlit_folium import st_folium
 
 logger = logging.getLogger(__name__)
 
@@ -258,7 +260,12 @@ def show_page2() -> None:
        - Cache miss → download tile, run image model, run text model,
                       log to database/images.csv, display results.
     """
-    st.title("AI Environmental Risk Assessment")
+    st.title("Okavango AI Risk Assessment")
+    st.markdown(
+        "*Select any location on Earth by clicking the map or entering coordinates manually. "
+        "A satellite image of the area will be analysed by an AI vision model, followed by an automated "
+        "environmental risk assessment. Results are cached so repeated queries run instantly.*"
+    )
 
     # --- Load config ---
     try:
@@ -278,14 +285,32 @@ def show_page2() -> None:
 
     # --- Location inputs ---
     st.subheader("Select a Location")
+    st.caption("Click anywhere on the map to set the coordinates, or enter them manually below.")
+
+    # Folium click map — satellite tiles from ESRI
+    m = folium.Map(location=[20, 0], zoom_start=2, tiles=None)
+    folium.TileLayer(
+        tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+        attr="Esri World Imagery",
+        name="Satellite",
+    ).add_to(m)
+    map_data = st_folium(m, height=400, use_container_width=True)
+
+    # Extract clicked coordinates (fall back to 0,0 if nothing clicked yet)
+    clicked_lat = 0.0
+    clicked_lon = 0.0
+    if map_data and map_data.get("last_clicked"):
+        clicked_lat = round(map_data["last_clicked"]["lat"], 4)
+        clicked_lon = round(map_data["last_clicked"]["lng"], 4)
+
     col1, col2, col3 = st.columns(3)
     with col1:
         latitude = st.number_input(
-            "Latitude", min_value=-90.0, max_value=90.0, value=0.0, step=0.01
+            "Latitude", min_value=-90.0, max_value=90.0, value=clicked_lat, step=0.01
         )
     with col2:
         longitude = st.number_input(
-            "Longitude", min_value=-180.0, max_value=180.0, value=0.0, step=0.01
+            "Longitude", min_value=-180.0, max_value=180.0, value=clicked_lon, step=0.01
         )
     with col3:
         zoom = st.slider("Zoom", min_value=1, max_value=19, value=default_zoom)
