@@ -4,9 +4,23 @@
 
 A lightweight Streamlit app for exploring environmental and land-use data: forests, deforestation, protected areas, and land degradation - combined with an AI-powered satellite image risk assessment tool.
 
+## Table of contents
+
+1. [Team](#team)
+2. [What Project Okavango does](#what-project-okavango-does)
+3. [Data sources](#data-sources)
+4. [Requirements](#requirements)
+5. [Installation](#installation)
+6. [How to run](#how-to-run)
+7. [Project structure](#project-structure)
+8. [AI Risk Assessment examples](#ai-risk-assessment-examples)
+9. [Project Okavango and the UN Sustainable Development Goals](#project-okavango-and-the-un-sustainable-development-goals)
+10. [License](#license)
+
 ---
 
-## Team
+<a id="team"></a>
+## 1. Team
 
 | Name | Student Number | Email |
 |------|---------------|-------|
@@ -17,7 +31,8 @@ A lightweight Streamlit app for exploring environmental and land-use data: fores
 
 ---
 
-## What this project does
+<a id="what-project-okavango-does"></a>
+## 2. What Project Okavango does
 
 **Page 1 - Global Analysis**
 - Downloads five environmental datasets from Our World in Data and merges them with a world map.
@@ -35,7 +50,8 @@ A lightweight Streamlit app for exploring environmental and land-use data: fores
 
 ---
 
-## Data sources
+<a id="data-sources"></a>
+## 3. Data sources
 
 | Dataset | Source |
 |--------|--------|
@@ -48,7 +64,8 @@ A lightweight Streamlit app for exploring environmental and land-use data: fores
 
 ---
 
-## Requirements
+<a id="requirements"></a>
+## 4. Requirements
 
 - Python 3.10+
 - [Ollama](https://ollama.com) installed and running locally (required for Page 2)
@@ -56,7 +73,8 @@ A lightweight Streamlit app for exploring environmental and land-use data: fores
 
 ---
 
-## Installation
+<a id="installation"></a>
+## 5. Installation
 
 **1. Install Ollama**
 
@@ -76,7 +94,8 @@ pip install streamlit geopandas pandas requests shapely plotly pydantic pyyaml f
 
 ---
 
-## How to run
+<a id="how-to-run"></a>
+## 6. How to run
 
 From the project root (`Group_A/`):
 
@@ -106,7 +125,8 @@ Run from the project root.
 
 ---
 
-## Project structure
+<a id="project-structure"></a>
+## 7. Project structure
 
 ```
 Group_A/
@@ -132,7 +152,8 @@ Group_A/
 
 ---
 
-## AI Risk Assessment examples
+<a id="ai-risk-assessment-examples"></a>
+## 8. AI Risk Assessment examples
 
 **Leticia, Colombia (Amazon rainforest)** - lat -4.2, lon -69.9, zoom 10
 ![Danger flag - Amazon Colombia](screenshots/danger_1.png)
@@ -145,21 +166,28 @@ Group_A/
 
 ---
 
-## This project and the UN Sustainable Development Goals
+<a id="project-okavango-and-the-un-sustainable-development-goals"></a>
+## 9. Project Okavango and the UN Sustainable Development Goals
 
-Project Okavango directly supports several of the United Nations' Sustainable Development Goals (SDGs).
+Project Okavango supports several of the United Nations' [Sustainable Development Goals (SDGs)](https://sdgs.un.org/goals). We link the project to the UN 2030 Agenda as follows.
 
 **SDG 15 - Life on Land**
 This is the most direct connection. The app tracks deforestation, land degradation, and terrestrial protected areas at a global scale. By making it easy to compare countries and observe trends over time, it helps identify where ecosystems are under the most pressure. The AI risk assessment adds a real-time layer: any location on Earth can be checked for visible signs of environmental damage using satellite imagery.
 
 **SDG 13 - Climate Action**
-Forests are critical carbon sinks. Deforestation and land degradation reduce the planet's ability to absorb CO₂, accelerating climate change. The app makes the scale of annual forest loss visible across countries and years, supporting awareness and evidence-based advocacy for climate action.
+Forests are critical carbon sinks. Deforestation and land degradation reduce the planet's ability to absorb CO₂, accelerating climate change. The app makes the scale of annual forest loss visible across countries and years, supporting awareness and evidence-based advocacy for climate action. By putting trends and country-level data at users’ fingertips, it can help inform policy choices and public engagement on climate.
+
+**SDG 11 - Sustainable Cities and Communities**
+The app helps monitor pressures on land from urbanisation and degradation. By visualising terrestrial protected areas and degraded land, and by letting the AI flag signs of urban sprawl or land degradation in satellite imagery, it supports evidence-based planning and the goal of making human settlements more inclusive, safe, resilient and sustainable. Planners, researchers and NGOs can use it to screen regions of interest or track changes over time without relying on proprietary platforms.
 
 **SDG 17 - Partnerships for the Goals**
 The project is built entirely on open data (Our World in Data, Natural Earth) and open-source tools (Streamlit, Ollama, GeoPandas). This reflects the spirit of SDG 17 - using shared knowledge and freely available technology to build tools that anyone can run, inspect, and build upon. The AI workflow demonstrates how lightweight, locally-run models can bring analytical capabilities to users without depending on expensive proprietary infrastructure.
 
+Together, the app supports life on land and climate action by making environmental data and risk visible, using open tools and data in the spirit of partnership.
+
 ---
 
-## License
+<a id="license"></a>
+## 10. License
 
 See [LICENSE](LICENSE).
