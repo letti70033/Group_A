@@ -72,7 +72,7 @@ if page == "Page 1 - Analysis":
         ),
         "Share of Degraded Land": (
             "Estimates the proportion of land that has lost productivity due to degradation. "
-            "A **high value** means a large share of land is degraded — a serious environmental concern. "
+            "A **high value** means a large share of land is degraded - a serious environmental concern. "
             "A **low value** means most land remains productive and healthy."
         ),
         "Terrestrial Protected Areas": (
@@ -82,7 +82,7 @@ if page == "Page 1 - Analysis":
         ),
     }
 
-    st.title("Okavango Dashboard — Tracking Our Planet's Green Cover")
+    st.title("Okavango Dashboard - Tracking Our Planet's Green Cover")
     st.markdown(
         "*This tool tracks how the world's forests, protected areas, and land conditions are changing over time. "
         "Explore five global datasets by country and year, then use the AI Risk Assessment page to analyse "
@@ -120,7 +120,7 @@ if page == "Page 1 - Analysis":
         k4.metric("Selected year", selected_year)
 
     # --- Interactive choropleth map (plotly) ---
-    st.subheader(f"{selected} — {selected_year}")
+    st.subheader(f"{selected} - {selected_year}")
 
     # Session state key scoped to selected dataset so switching datasets resets the selection
     multiselect_key = f"countries_{selected}"
@@ -189,7 +189,7 @@ if page == "Page 1 - Analysis":
         combined = pd.concat([bottom_n, top_n])
         colors = ["#de2d26"] * n_each + ["#2ca25f"] * n_each
 
-        st.subheader(f"Top {n_each} and Bottom {n_each} Countries — {selected_year}")
+        st.subheader(f"Top {n_each} and Bottom {n_each} Countries - {selected_year}")
         fig2 = go.Figure(go.Bar(
             x=combined[column],
             y=combined["Entity"],

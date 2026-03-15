@@ -1,4 +1,4 @@
-# models.yaml — AI workflow configuration for Project Okavango
+# models.yaml - AI workflow configuration for Project Okavango
 # This file is read by the app at startup.
 # Change model names or prompts here without touching any Python code.
 
