@@ -19,28 +19,34 @@ A lightweight Streamlit app for exploring environmental and land-use data: fores
 
 ---
 
-<a id="team"></a>
+
+
 ## 1. Team
 
-| Name | Student Number | Email |
-|------|---------------|-------|
-| Leticia Brendle | 70033 | 70033@novasbe.pt |
-| Marie | 73606 | 73606@novasbe.pt |
-| Philipp | 66323 | 66323@novasbe.pt |
-| Alex | 70299 | 70299@novasbe.pt |
+
+| Name              | Student Number | Email                                       |
+| ----------------- | -------------- | ------------------------------------------- |
+| Leticia Brendle   | 70033          | [70033@novasbe.pt](mailto:70033@novasbe.pt) |
+| Marie Henke       | 73606          | [73606@novasbe.pt](mailto:73606@novasbe.pt) |
+| Philipp Connert   | 66323          | [66323@novasbe.pt](mailto:66323@novasbe.pt) |
+| Alex Kaisergruber | 70299          | [70299@novasbe.pt](mailto:70299@novasbe.pt) |
+
 
 ---
 
-<a id="what-project-okavango-does"></a>
+
+
 ## 2. What Project Okavango does
 
 **Page 1 - Global Analysis**
+
 - Downloads five environmental datasets from Our World in Data and merges them with a world map.
 - Interactive choropleth map - hover any country to see its value, click to add it to the time series.
 - Year slider to explore any year in the data (always uses the most recent available by default).
 - KPI cards, a top/bottom countries bar chart, and a multi-country time series.
 
 **Page 2 - AI Risk Assessment**
+
 - Click anywhere on a satellite map (or enter coordinates manually) to select a location.
 - Downloads a satellite tile from ESRI World Imagery for that location.
 - An AI vision model (via Ollama) describes what it sees in the image.
@@ -50,21 +56,25 @@ A lightweight Streamlit app for exploring environmental and land-use data: fores
 
 ---
 
-<a id="data-sources"></a>
+
+
 ## 3. Data sources
 
-| Dataset | Source |
-|--------|--------|
-| Annual change in forest area | Our World in Data |
-| Annual deforestation | Our World in Data |
-| Terrestrial protected areas (% of land) | Our World in Data |
-| Share of degraded land | Our World in Data |
-| Forest area as share of land area | Our World in Data |
-| World map (Admin 0 – Countries) | Natural Earth (110m cultural) |
+
+| Dataset                                 | Source                        |
+| --------------------------------------- | ----------------------------- |
+| Annual change in forest area            | Our World in Data             |
+| Annual deforestation                    | Our World in Data             |
+| Terrestrial protected areas (% of land) | Our World in Data             |
+| Share of degraded land                  | Our World in Data             |
+| Forest area as share of land area       | Our World in Data             |
+| World map (Admin 0 – Countries)         | Natural Earth (110m cultural) |
+
 
 ---
 
-<a id="requirements"></a>
+
+
 ## 4. Requirements
 
 - Python 3.10+
@@ -73,7 +83,8 @@ A lightweight Streamlit app for exploring environmental and land-use data: fores
 
 ---
 
-<a id="installation"></a>
+
+
 ## 5. Installation
 
 **1. Install Ollama**
@@ -94,7 +105,8 @@ pip install streamlit geopandas pandas requests shapely plotly pydantic pyyaml f
 
 ---
 
-<a id="how-to-run"></a>
+
+
 ## 6. How to run
 
 From the project root (`Group_A/`):
@@ -125,7 +137,8 @@ Run from the project root.
 
 ---
 
-<a id="project-structure"></a>
+
+
 ## 7. Project structure
 
 ```
@@ -152,21 +165,23 @@ Group_A/
 
 ---
 
-<a id="ai-risk-assessment-examples"></a>
+
+
 ## 8. AI Risk Assessment examples
 
 **Leticia, Colombia (Amazon rainforest)** - lat -4.2, lon -69.9, zoom 10
-![Danger flag - Amazon Colombia](screenshots/danger_1.png)
+Danger flag - Amazon Colombia
 
 **Sahel region, Mali** - lat 15.1994, lon -7.2949, zoom 10
-![Danger flag - Sahel Mali](screenshots/danger_2.png)
+Danger flag - Sahel Mali
 
 **Amazon, Brazil** - lat -3.5, lon -62, zoom 10
-![Danger flag - Amazon Brazil](screenshots/danger_3.png)
+Danger flag - Amazon Brazil
 
 ---
 
-<a id="project-okavango-and-the-un-sustainable-development-goals"></a>
+
+
 ## 9. Project Okavango and the UN Sustainable Development Goals
 
 Project Okavango supports several of the United Nations' [Sustainable Development Goals (SDGs)](https://sdgs.un.org/goals). We link the project to the UN 2030 Agenda as follows.
@@ -187,7 +202,8 @@ Together, the app supports life on land and climate action by making environment
 
 ---
 
-<a id="license"></a>
+
+
 ## 10. License
 
 See [LICENSE](LICENSE).
