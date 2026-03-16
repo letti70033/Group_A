@@ -11,9 +11,9 @@ A lightweight Streamlit app for exploring environmental and land-use data: fores
 | Name | Student Number | Email |
 |------|---------------|-------|
 | Leticia Brendle | 70033 | 70033@novasbe.pt |
-| Marie | 73606 | 73606@novasbe.pt |
-| Philipp | 66323 | 66323@novasbe.pt |
-| Alex | 70299 | 70299@novasbe.pt |
+| Marie Henke | 73606 | 73606@novasbe.pt |
+| Philipp Connert | 66323 | 66323@novasbe.pt |
+| Alex Kaisergruber | 70299 | 70299@novasbe.pt |
 
 ---
 
