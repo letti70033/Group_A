@@ -1,11 +1,11 @@
 """
-page2.py — AI Environmental Risk Assessment (Day 2, Phase 1 + Phase 2)
+page2.py - AI Environmental Risk Assessment (Day 2, Phase 1 + Phase 2)
 
 Phase 1 (teammate): satellite image download, LLaVA image description,
                     Mistral risk assessment.
 Phase 2 (data governance): configuration loaded from models.yaml,
                             every pipeline run logged to database/images.csv,
-                            caching — cached results returned without
+                            caching - cached results returned without
                             re-running the models.
 """
 
@@ -34,7 +34,7 @@ _DATABASE_DIR = _ROOT / "database"
 _DATABASE_PATH = _DATABASE_DIR / "images.csv"
 _IMAGE_DIR = _ROOT / "images"
 
-# CSV column order — must match database/images.csv header
+# CSV column order - must match database/images.csv header
 _CSV_COLUMNS = [
     "timestamp",
     "latitude",
@@ -287,7 +287,7 @@ def show_page2() -> None:
     st.subheader("Select a Location")
     st.caption("Click anywhere on the map to set the coordinates, or enter them manually below.")
 
-    # Folium click map — satellite tiles from ESRI
+    # Folium click map - satellite tiles from ESRI
     m = folium.Map(location=[20, 0], zoom_start=2, tiles=None)
     folium.TileLayer(
         tiles=f"{tile_service}/{{z}}/{{y}}/{{x}}",
@@ -325,7 +325,7 @@ def show_page2() -> None:
     cached = _lookup_cache(db, latitude, longitude, zoom)
 
     if cached is not None:
-        st.info("✅ Loaded from cache — this location was already analysed.")
+        st.info("✅ Loaded from cache - this location was already analysed.")
         _display_results(
             image_path=_ROOT / str(cached["image_path"]),
             image_description=str(cached["image_description"]),
