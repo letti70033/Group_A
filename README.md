@@ -144,6 +144,7 @@ Run from the project root.
 ```
 Group_A/
 ├── app/
+│   ├── __init__.py
 │   ├── okavango.py        # Main data class (download + merge)
 │   ├── page2.py           # AI Risk Assessment page
 │   └── streamlit_app.py   # Streamlit entry point
@@ -151,7 +152,13 @@ Group_A/
 │   └── images.csv         # Logged pipeline runs
 ├── downloads/             # Raw datasets (auto-downloaded)
 ├── images/                # Satellite tile images
-├── notebooks/             # Prototyping notebooks
+├── notebooks/
+│   ├── assignment_day1.ipynb
+│   └── assignment_day2.ipynb
+├── screenshots/           # App screenshots for README
+│   ├── danger_1.png
+│   ├── danger_2.png
+│   └── danger_3.png
 ├── tests/
 │   ├── conftest.py
 │   ├── test_download.py
